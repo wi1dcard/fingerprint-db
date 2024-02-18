@@ -66,7 +66,7 @@ jobs:
           chmod +x ./echoserver_${{ matrix.os }}
           ./echoserver_${{ matrix.os }} -verbose 2>> $GITHUB_STEP_SUMMARY &
           go run ./go/main.go
-          kill %1
+          taskkill //PID $! || kill $!
           wait
 
       # - uses: actions/upload-artifact@v4
