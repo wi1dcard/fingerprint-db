@@ -1,0 +1,29 @@
+name: Fingerprint
+inputs:
+  echoserver-filename:
+    required: true
+  unique-filename-suffix:
+    required: true
+  run:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+    - uses: actions/download-artifact@v4
+      with:
+        name: echoserver
+
+    - shell: bash
+      run: |
+        chmod +x ${{ inputs.echoserver-filename }}
+        ${{ inputs.echoserver-filename }} -verbose &
+        ${{ inputs.run }}
+        kill %1
+        wait
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: fingerprint-${{ inputs.unique-filename-suffix }}.json
+        path: fingerprint-${{ inputs.unique-filename-suffix }}.json
