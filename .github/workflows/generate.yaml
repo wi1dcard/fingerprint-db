@@ -7,7 +7,8 @@ on:
 jobs:
   generate:
     name: Generate
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
     strategy:
       max-parallel: 2
       matrix:
@@ -16,29 +17,23 @@ jobs:
           - ubuntu-22.04
           - windows-2022
           - macos-13
-        setup:
-          - language: go
-            version: ~1.21.0
-        # exclude:
-        #   - os: macos-latest
-        #     version: 12
-        #     environment: production
-        #   - os: windows-latest
-        #     version: 16
+        env:
+          - &go
+            setup: go
+            version: ~1.19.0
+            run: go run ./go/main.go
+
+          - <<: *go
+            version: ~1.20.0
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-${{ matrix.env.setup }}@v5
         with:
-          go-version: ${{ matrix.setup.version }}
+          go-version: ${{ matrix.env.version }}
 
-      - run: go get
-      - run: make build
-        env:
-          CGO_ENABLED: 0
+      - run: ${{ matrix.env.run }}
 
       # - uses: actions/upload-artifact@v4
       #   with:
