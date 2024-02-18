@@ -23,7 +23,6 @@ jobs:
 
       # filenames are according to os matrix below
       - run: ./testdata/gencert.sh
-        shell: bash
       - run: GOOS=linux go build -o echoserver_ubuntu-22.04 $BUILD_DIR
       - run: GOOS=windows go build -o echoserver_windows-2022 $BUILD_DIR
       - run: GOOS=darwin go build -o echoserver_macos-13 $BUILD_DIR
