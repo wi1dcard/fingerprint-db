@@ -21,7 +21,7 @@ runs:
         ${{ inputs.echoserver-filename }} -verbose &
         ${{ inputs.run }}
 
-        FILENAME=$(echo "fingerprint_${{ inputs.unique-platform-id }}.json" | sed -i 's/:/_/g')
+        FILENAME=$(echo "fingerprint_${{ inputs.unique-platform-id }}.json" | sed 's/:/_/g')
         echo FILENAME=$FILENAME > $GITHUB_OUTPUT
 
         cat fingerprint.json | jq '{
