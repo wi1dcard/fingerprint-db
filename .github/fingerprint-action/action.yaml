@@ -19,7 +19,7 @@ runs:
         chmod +x ${{ inputs.echoserver-filename }}
         ${{ inputs.echoserver-filename }} -verbose &
         ${{ inputs.run }}
-        mv fingerprint.json fingerprint-${{ inputs.unique-filename-suffix }}.json
+        mv fingerprint.json fingerprint_${{ inputs.unique-filename-suffix }}.json
         kill %1
         wait
 
