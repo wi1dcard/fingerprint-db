@@ -2,7 +2,7 @@ name: Fingerprint
 inputs:
   echoserver-filename:
     required: true
-  unique-filename-suffix:
+  unique-platform-id:
     required: true
   run:
     required: true
@@ -19,11 +19,13 @@ runs:
         chmod +x ${{ inputs.echoserver-filename }}
         ${{ inputs.echoserver-filename }} -verbose &
         ${{ inputs.run }}
-        mv fingerprint.json fingerprint_${{ inputs.unique-filename-suffix }}.json
+        cat fingerprint.json | jq '{
+          "unique-platform-id": "${{ inputs.unique-platform-id }}"
+        } + .' > fingerprint_${{ inputs.unique-platform-id }}.json
         kill %1
         wait
 
     - uses: actions/upload-artifact@v4
       with:
-        name: fingerprint_${{ inputs.unique-filename-suffix }}.json
-        path: fingerprint_${{ inputs.unique-filename-suffix }}.json
+        name: fingerprint_${{ inputs.unique-platform-id }}.json
+        path: fingerprint_${{ inputs.unique-platform-id }}.json
