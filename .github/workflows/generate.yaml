@@ -22,6 +22,7 @@ jobs:
           go-version: ~1.21.0
 
       # filenames are according to os matrix below
+      - run: ./testdata/gencert.sh && cp ./testdata/tls.crt ./testdata/tls.key .
       - run: GOOS=linux go build -o echoserver_ubuntu-22.04 $BUILD_DIR
       - run: GOOS=windows go build -o echoserver_windows-2022 $BUILD_DIR
       - run: GOOS=darwin go build -o echoserver_macos-13 $BUILD_DIR
@@ -29,7 +30,10 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: echoserver
-          path: echoserver_*
+          path: |
+            echoserver_*
+            tls.crt
+            tls.key
 
   golang:
     name: Golang
@@ -46,7 +50,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: echoserver
-      - run: chmod +x ./echoserver_${{ matrix.os }} && ./echoserver_${{ matrix.os }} &
+      - run: chmod +x ./echoserver_${{ matrix.os }} && (./echoserver_${{ matrix.os }} &)
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.version }}
