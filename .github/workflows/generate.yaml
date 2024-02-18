@@ -83,7 +83,7 @@ jobs:
         with:
           echoserver-filename: ./echoserver_${{ matrix.os }}
           unique-platform-id: go-${{ steps.setup.outputs.go-version }}-${{ matrix.os }}
-          run: go run ./go/main.go
+          run: cd go && go run ./main.go
 
   curl:
     name: Curl
