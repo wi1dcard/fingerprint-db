@@ -5,23 +5,46 @@ on:
     branches: ["master"]
 
 jobs:
+  build-echoserver:
+    name: Build Fingerproxy echoserver
+    runs-on: ubuntu-latest
+    env:
+      CGO_ENABLED: "0"
+      GOARCH: amd64
+      BUILD_DIR: ./example/echo-server
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: wi1dcard/fingerproxy
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ~1.21.0
+
+      # filenames are according to os matrix below
+      - run: GOOS=linux go build -o echoserver_ubuntu-22.04 $BUILD_DIR
+      - run: GOOS=windows go build -o echoserver_windows-2022 $BUILD_DIR
+      - run: GOOS=darwin go build -o echoserver_macos-13 $BUILD_DIR
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: echoserver
+          path: echoserver_*
+
   golang:
     name: Golang
     runs-on: ${{ matrix.os }}
+    needs: build-echoserver
     strategy:
-      # max-parallel: 2
       matrix:
-        # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners
-        os:
-          - ubuntu-22.04
-          - windows-2022
-          - macos-13
+        os: [ubuntu-22.04, windows-2022, macos-13]
         version:
           - ~1.19.0
           - ~1.20.0
-
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+      - run: ./echoserver_${{ matrix.os }} &
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.version }}
