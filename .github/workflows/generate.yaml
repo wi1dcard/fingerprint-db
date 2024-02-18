@@ -48,6 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
+        id: setup
         with:
           go-version: ${{ matrix.version }}
           cache: false
@@ -55,5 +56,5 @@ jobs:
       - uses: ./.github/fingerprint-action
         with:
           echoserver-filename: ./echoserver_${{ matrix.os }}
-          unique-filename-suffix: go-${{ matrix.version }}-${{ matrix.os }}
+          unique-filename-suffix: go-${{ steps.setup.outputs.go-version }}-${{ matrix.os }}
           run: go run ./go/main.go

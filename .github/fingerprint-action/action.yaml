@@ -19,10 +19,11 @@ runs:
         chmod +x ${{ inputs.echoserver-filename }}
         ${{ inputs.echoserver-filename }} -verbose &
         ${{ inputs.run }}
+        mv fingerprint.json fingerprint-${{ inputs.unique-filename-suffix }}.json
         kill %1
         wait
 
     - uses: actions/upload-artifact@v4
       with:
-        name: fingerprint-${{ inputs.unique-filename-suffix }}.json
-        path: fingerprint-${{ inputs.unique-filename-suffix }}.json
+        name: fingerprint_${{ inputs.unique-filename-suffix }}.json
+        path: fingerprint_${{ inputs.unique-filename-suffix }}.json
