@@ -146,4 +146,6 @@ jobs:
         with:
           echoserver-filename: ./echoserver_ubuntu-22.04
           unique-platform-id: curl-container-${{ matrix.image }}
-          run: docker run --rm -v $PWD:/src ${{ matrix.image }} /src/curl/curl-linux.sh --http2
+          run: |
+            docker run --add-host=host.docker.internal:host-gateway \
+              --rm -v $PWD:/src ${{ matrix.image }} /src/curl/curl-linux.sh --http2
