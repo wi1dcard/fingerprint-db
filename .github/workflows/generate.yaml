@@ -39,8 +39,6 @@ jobs:
     name: Golang
     runs-on: ${{ matrix.os }}
     needs: build-echoserver
-    outputs:
-      fingerprints: ${{ steps.fingerprint.outputs.FINGERPRINTS }}
     strategy:
       matrix:
         os: [ubuntu-22.04, windows-2022, macos-13]
@@ -56,15 +54,11 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.version }}
-          cache-dependency-path: |
-            go/go.sum
+          cache: false
       - id: fingerprint
         run: |
-          {
-            echo 'FINGERPRINTS<<EOF'
-            go run ./go/main.go
-            echo EOF
-          } >> "$GITHUB_OUTPUT"
+          echo "## Golang ${{ matrix.version }} @ ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
+          go run ./go/main.go >> $GITHUB_STEP_SUMMARY
 
       # - uses: actions/upload-artifact@v4
       #   with:
