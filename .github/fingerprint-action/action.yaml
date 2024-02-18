@@ -27,6 +27,9 @@ runs:
         cat fingerprint.json | jq '{
           "unique-platform-id": "${{ inputs.unique-platform-id }}"
         } + .' > $FILENAME
+
+        ls -la
+
         kill %1
         wait
 
