@@ -41,7 +41,8 @@ jobs:
     needs:
       - golang
       - curl
-      - curl-windows
+      - curl-mingw
+      - curl-container
       # ...
     steps:
       - uses: actions/download-artifact@v4
