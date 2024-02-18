@@ -44,6 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
+      - run: ls -la
       - run: ./echoserver_${{ matrix.os }} &
       - uses: actions/setup-go@v5
         with:
