@@ -19,7 +19,8 @@ runs:
       run: |
         chmod +x ${{ inputs.echoserver-filename }}
         ${{ inputs.echoserver-filename }} -verbose -listen-addr :8443 &
-        ${{ inputs.run }}
+
+        ( ${{ inputs.run }} )
 
         FILENAME=$(echo "fingerprint_${{ inputs.unique-platform-id }}.json" | sed 's/:/_/g')
         echo FILENAME=$FILENAME > $GITHUB_OUTPUT
