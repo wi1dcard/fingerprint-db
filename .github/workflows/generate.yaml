@@ -55,6 +55,11 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: echoserver
+
+      - shell: bash
+        run: |
+          echo "## Golang ${{ matrix.version }} @ ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
+
       - shell: bash
         run: |
           echo "## Golang ${{ matrix.version }} @ ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
