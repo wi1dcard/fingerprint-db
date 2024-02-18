@@ -148,4 +148,5 @@ jobs:
           unique-platform-id: curl-container-${{ matrix.image }}
           run: |
             docker run --add-host=host.docker.internal:host-gateway \
-              --rm -v $PWD:/src ${{ matrix.image }} /src/curl/curl-linux.sh --http2
+              --rm -v $PWD:/src ${{ matrix.image }} \
+              bash -c 'cd /src && ./curl/curl-linux.sh --http2'
