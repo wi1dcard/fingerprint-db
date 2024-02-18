@@ -1,6 +1,6 @@
 module fingerprint-db
 
-go 1.21.7
+go 1.21
 
 require golang.org/x/net v0.21.0
 
