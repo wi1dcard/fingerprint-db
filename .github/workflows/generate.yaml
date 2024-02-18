@@ -46,7 +46,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: echoserver
-      - run: ./echoserver_${{ matrix.os }} &
+      - run: chmod +x ./echoserver_${{ matrix.os }} && ./echoserver_${{ matrix.os }} &
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.version }}
