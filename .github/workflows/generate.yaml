@@ -145,11 +145,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - if: '!startsWith(matrix.image, "centos")'
+      - if: ${{ !startsWith(matrix.image, 'centos') }}
         run: |
           apt update
           apt install curl
-      - if: 'startsWith(matrix.image, "centos")'
+
+      - if: ${{ startsWith(matrix.image, 'centos') }}
         run: |
           yum install curl -y
 
