@@ -40,6 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - golang
+      - curl
       # ...
     steps:
       - uses: actions/download-artifact@v4
@@ -83,3 +84,18 @@ jobs:
           echoserver-filename: ./echoserver_${{ matrix.os }}
           unique-platform-id: go-${{ steps.setup.outputs.go-version }}-${{ matrix.os }}
           run: go run ./go/main.go
+
+  curl:
+    name: Curl
+    runs-on: ${{ matrix.os }}
+    needs: build-echoserver
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, windows-2022, macos-13]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/fingerprint-action
+        with:
+          echoserver-filename: ./echoserver_${{ matrix.os }}
+          unique-platform-id: curl-${{ matrix.os }}
+          run: ./curl/curl.sh
