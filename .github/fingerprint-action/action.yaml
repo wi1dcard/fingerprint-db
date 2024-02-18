@@ -15,17 +15,22 @@ runs:
         name: echoserver
 
     - shell: bash
+      id: main
       run: |
         chmod +x ${{ inputs.echoserver-filename }}
         ${{ inputs.echoserver-filename }} -verbose &
         ${{ inputs.run }}
+
+        FILENAME=$(echo "fingerprint_${{ inputs.unique-platform-id }}.json" | sed -i 's/:/_/g')
+        echo FILENAME=$FILENAME > $GITHUB_OUTPUT
+
         cat fingerprint.json | jq '{
           "unique-platform-id": "${{ inputs.unique-platform-id }}"
-        } + .' > fingerprint_${{ inputs.unique-platform-id }}.json
+        } + .' > $FILENAME
         kill %1
         wait
 
     - uses: actions/upload-artifact@v4
       with:
-        name: fingerprint_${{ inputs.unique-platform-id }}.json
-        path: fingerprint_${{ inputs.unique-platform-id }}.json
+        name: ${{ steps.main.output.FILENAME }}
+        path: ${{ steps.main.output.FILENAME }}
