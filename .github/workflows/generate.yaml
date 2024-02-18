@@ -59,10 +59,6 @@ jobs:
       - shell: bash
         run: |
           echo "## Golang ${{ matrix.version }} @ ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
-
-      - shell: bash
-        run: |
-          echo "## Golang ${{ matrix.version }} @ ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
           chmod +x ./echoserver_${{ matrix.os }}
           ./echoserver_${{ matrix.os }} -verbose 2>> $GITHUB_STEP_SUMMARY &
           go run ./go/main.go
