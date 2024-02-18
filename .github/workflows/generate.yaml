@@ -97,6 +97,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - if: startsWith(matrix.os, 'windows')
+        shell: bash
         run: |
           curl -o curl.zip https://curl.se/windows/dl-8.6.0_1/curl-8.6.0_1-win64-mingw.zip
           unzip curl.zip
