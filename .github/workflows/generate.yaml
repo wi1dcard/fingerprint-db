@@ -148,12 +148,12 @@ jobs:
 
       - if: ${{ !startsWith(matrix.image, 'centos') }}
         run: |
-          apt update
-          apt install curl
+          apt update -y
+          apt install -y curl
 
       - if: ${{ startsWith(matrix.image, 'centos') }}
         run: |
-          yum install curl -y
+          yum install -y curl
 
       - uses: ./.github/fingerprint-action
         with:
