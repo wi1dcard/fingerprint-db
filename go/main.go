@@ -7,13 +7,15 @@ import (
 	"log"
 	"net/http"
 	"os"
+
+	"golang.org/x/net/http2"
 )
 
 func main() {
 	url := "https://localhost:8443/json"
 	method := "GET"
 
-	tr := &http.Transport{TLSClientConfig: &tls.Config{
+	tr := &http2.Transport{TLSClientConfig: &tls.Config{
 		InsecureSkipVerify: true,
 	}}
 
