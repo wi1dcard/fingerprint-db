@@ -22,14 +22,14 @@ runs:
 
         ( ${{ inputs.run }} )
 
+        ls -la
+
         FILENAME=$(echo "fingerprint_${{ inputs.unique-platform-id }}.json" | sed 's/:/_/g')
         echo FILENAME=$FILENAME > $GITHUB_OUTPUT
 
         cat fingerprint.json | jq '{
           "unique-platform-id": "${{ inputs.unique-platform-id }}"
         } + .' > $FILENAME
-
-        ls -la
 
         kill %1
         wait
