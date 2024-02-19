@@ -44,6 +44,8 @@ jobs:
       - curl
       - curl-mingw
       - curl-container
+      - python
+      - python-container
       # ...
     steps:
       - uses: actions/download-artifact@v4
@@ -183,8 +185,8 @@ jobs:
               bash -c "cd /src && ./curl/curl-container.sh $HTTP2"
 
   python:
-    name: Python container
-    runs-on: ubuntu-22.04
+    name: Python
+    runs-on: ${{ matrix.os }}
     needs: build-echoserver
     strategy:
       matrix:
