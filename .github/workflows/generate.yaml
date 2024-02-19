@@ -72,7 +72,11 @@ jobs:
     needs: build-echoserver
     strategy:
       matrix:
-        os: [ubuntu-22.04, windows-2022, macos-13]
+        os:
+          - ubuntu-22.04
+          # same:
+          # - windows-2022
+          # - macos-13
         version:
           - ~1.21.0
     steps:
@@ -98,7 +102,11 @@ jobs:
     needs: build-echoserver
     strategy:
       matrix:
-        os: [ubuntu-22.04, windows-2022, macos-13]
+        os:
+          - ubuntu-22.04
+          # same:
+          # - windows-2022
+          # - macos-13
         version:
           - ~1.17.0
     steps:
