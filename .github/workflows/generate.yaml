@@ -249,3 +249,32 @@ jobs:
             docker run --add-host=localhost:host-gateway \
               --rm -v $PWD:/src ${{ matrix.image }} \
               sh -c "cd /src && pip install aiohttp && python ./python/with-aiohttp.py"
+
+  node:
+    name: Node
+    runs-on: ${{ matrix.os }}
+    needs: build-echoserver
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, windows-2022, macos-13]
+        version:
+          - 21.x
+          - 20.x
+          - 19.x
+          - 18.x
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        id: setup
+        with:
+          node-version: ${{ matrix.version }}
+      - uses: ./.github/fingerprint-action
+        with:
+          echoserver-filename: ./echoserver_${{ matrix.os }}
+          unique-platform-id: node-${{ steps.setup.outputs.node-version }}-${{ matrix.os }}
+          run: |
+            cd node
+            npm i
+            node http2.js
+            node https.js
+            node superagent.js
