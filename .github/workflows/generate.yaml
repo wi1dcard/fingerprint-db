@@ -193,10 +193,12 @@ jobs:
         os: [ubuntu-22.04, windows-2022, macos-13]
         version:
           - "3.12"
-          - "3.11"
-          - "3.10"
+          # as same as:
+          # - "3.11"
+          # - "3.10"
           - "3.9"
-          - "3.8"
+          # as same as:
+          # - "3.8"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -211,7 +213,8 @@ jobs:
             python ./python/httpclient.py
             pip install requests && python ./python/with-requests.py
             pip install httpx 'httpx[http2]' && python ./python/with-httpx.py
-            pip install aiohttp && python ./python/with-aiohttp.py
+            # as same as http.client:
+            # pip install aiohttp && python ./python/with-aiohttp.py
 
   python-container:
     name: Python container
@@ -246,9 +249,10 @@ jobs:
               --rm -v $PWD:/src ${{ matrix.image }} \
               sh -c "cd /src && pip install httpx 'httpx[http2]' && python ./python/with-httpx.py"
 
-            docker run --add-host=localhost:host-gateway \
-              --rm -v $PWD:/src ${{ matrix.image }} \
-              sh -c "cd /src && pip install aiohttp && python ./python/with-aiohttp.py"
+            # as same as http.client:
+            # docker run --add-host=localhost:host-gateway \
+            #   --rm -v $PWD:/src ${{ matrix.image }} \
+            #   sh -c "cd /src && pip install aiohttp && python ./python/with-aiohttp.py"
 
   node:
     name: Node
@@ -278,3 +282,4 @@ jobs:
             node http2.js
             node https.js
             node superagent.js
+            mv fingerprint.json ..
