@@ -183,4 +183,4 @@ jobs:
 
             docker run --add-host=localhost:host-gateway \
               --rm -v $PWD:/src ${{ matrix.image }} \
-              sh -c "cd /src && pip install httpx && python ./python/with-httpx.py"
+              sh -c "cd /src && pip install httpx 'httpx[http2]' && python ./python/with-httpx.py"

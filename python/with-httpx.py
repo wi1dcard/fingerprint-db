@@ -2,7 +2,8 @@ import httpx
 
 url = "https://localhost:8443/json"
 
-response = httpx.get(url, verify=False)
+client = httpx.Client(http2=True, verify=False)
+response = client.get(url)
 
 f = open("fingerprint.json", "ab")
 f.write(response.content)
