@@ -147,7 +147,7 @@ jobs:
           echoserver-filename: ./echoserver_ubuntu-22.04
           unique-platform-id: curl-container-${{ matrix.image }}
           run: |
-            [[ "${{ matrix.image }}" == "centos:*" ]] && HTTP2="" || HTTP2="--http2"
+            [[ "${{ matrix.image }}" = centos:* ]] && HTTP2="" || HTTP2="--http2"
 
             docker run --add-host=localhost:host-gateway \
               --rm -v $PWD:/src ${{ matrix.image }} \
