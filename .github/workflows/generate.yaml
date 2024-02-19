@@ -198,7 +198,7 @@ jobs:
     needs: build-echoserver
     strategy:
       matrix:
-        os: [ubuntu-22.04, windows-2022, macos-13]
+        os: [ubuntu-22.04, ubuntu-20.04, windows-2022, macos-13]
         version:
           - "3.12"
           # as same as:
@@ -275,9 +275,14 @@ jobs:
           # - 20.x
           # - 19.x
           # - 18.x
-          - 17.x
+          # - 17.x
           - 16.x
-          - 15.x
+          # as same as:
+          # - 15.x
+          - 14.x
+          - 13.x
+          - 12.x
+          - 11.x
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
