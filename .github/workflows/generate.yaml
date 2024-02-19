@@ -209,8 +209,9 @@ jobs:
           unique-platform-id: python-${{ steps.setup.outputs.python-version }}-${{ matrix.os }}
           run: |
             python ./python/httpclient.py
-            python ./python/with-requests.py
-            python ./python/with-httpx.py
+            pip install requests && python ./python/with-requests.py
+            pip install httpx 'httpx[http2]' && python ./python/with-httpx.py
+            pip install aiohttp && python ./python/with-aiohttp.py
 
   python-container:
     name: Python container
@@ -244,3 +245,7 @@ jobs:
             docker run --add-host=localhost:host-gateway \
               --rm -v $PWD:/src ${{ matrix.image }} \
               sh -c "cd /src && pip install httpx 'httpx[http2]' && python ./python/with-httpx.py"
+
+            docker run --add-host=localhost:host-gateway \
+              --rm -v $PWD:/src ${{ matrix.image }} \
+              sh -c "cd /src && pip install aiohttp && python ./python/with-aiohttp.py"
