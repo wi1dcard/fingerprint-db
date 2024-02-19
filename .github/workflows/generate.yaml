@@ -39,7 +39,8 @@ jobs:
     name: Aggregate
     runs-on: ubuntu-latest
     needs:
-      - golang
+      - go
+      - go-060
       - curl
       - curl-mingw
       - curl-container
