@@ -5,4 +5,5 @@ which yum && yum install -y curl || {
     apt-get install -y curl
 }
 
-$(dirname $0)/curl.sh "$@"
+curl --version
+curl -o fingerprint.json https://host.docker.internal:8443/json --insecure "$@"
