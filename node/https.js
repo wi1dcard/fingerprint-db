@@ -1,5 +1,5 @@
-const https = require('node:https');
-const fs = require('node:fs');
+const https = require('https');
+const fs = require('fs');
 
 var options = {
   host: 'localhost',

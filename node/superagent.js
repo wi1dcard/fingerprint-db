@@ -1,5 +1,5 @@
 const superagent = require('superagent');
-const fs = require('node:fs');
+const fs = require('fs');
 
 // callback
 superagent

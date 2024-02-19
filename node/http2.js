@@ -1,5 +1,5 @@
-const http2 = require('node:http2');
-const fs = require('node:fs');
+const http2 = require('http2');
+const fs = require('fs');
 
 const client = http2.connect('https://localhost:8443', {
   rejectUnauthorized: false,
