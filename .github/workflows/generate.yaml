@@ -180,3 +180,7 @@ jobs:
             docker run --add-host=localhost:host-gateway \
               --rm -v $PWD:/src ${{ matrix.image }} \
               sh -c "cd /src && pip install requests && python ./python/with-requests.py"
+
+            docker run --add-host=localhost:host-gateway \
+              --rm -v $PWD:/src ${{ matrix.image }} \
+              sh -c "cd /src && pip install httpx && python ./python/with-httpx.py"
