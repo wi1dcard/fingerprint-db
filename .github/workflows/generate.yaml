@@ -175,8 +175,8 @@ jobs:
           run: |
             docker run --add-host=localhost:host-gateway \
               --rm -v $PWD:/src ${{ matrix.image }} \
-              sh -c "cd /src && ./python/httpclient.py"
+              sh -c "cd /src && python ./python/httpclient.py"
 
             docker run --add-host=localhost:host-gateway \
               --rm -v $PWD:/src ${{ matrix.image }} \
-              sh -c "cd /src && pip install requests && ./python/with-requests.py"
+              sh -c "cd /src && pip install requests && python ./python/with-requests.py"
