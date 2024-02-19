@@ -85,7 +85,12 @@ jobs:
         with:
           echoserver-filename: ./echoserver_${{ matrix.os }}
           unique-platform-id: go-${{ steps.setup.outputs.go-version }}-${{ matrix.os }}
-          run: cd go && go mod tidy && go run ./main.go && mv fingerprint.json ..
+          run: |
+            cd go
+            go mod init main
+            go mod tidy
+            go run ./main.go
+            mv fingerprint.json ..
 
   curl:
     name: Curl
