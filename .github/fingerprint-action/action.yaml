@@ -32,7 +32,7 @@ runs:
         } + .' > $FILENAME
 
         kill %1
-        wait
+        sleep 1
 
     - uses: actions/upload-artifact@v4
       with:
